@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SnapNote AI — Smart Notes, Summarized Your Way</title>
+<meta name="description" content="Turn long notes into clear summaries, key points, and action items. Fast and private on-device with Gemini Nano, powerful in the cloud with Gemini — powered by Firebase AI Logic hybrid inference." />
+<link rel="stylesheet" href="./styles.css" />
+<script type="importmap">
+{
+  "imports": {
+    "firebase/app": "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js",
+    "firebase/ai": "https://www.gstatic.com/firebasejs/13.0.0/firebase-ai.js",
+    "firebase/app-check": "https://www.gstatic.com/firebasejs/13.0.0/firebase-app-check.js"
+  }
+}
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">✦</span>
+      <div>
+        <strong>SnapNote AI</strong>
+        <span class="tagline">Smart notes, summarized your way</span>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="pill pill-hybrid">Hybrid AI</span>
+      <span class="pill" id="engineBadge">On-device + Cloud</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="demoBanner" class="demo-banner" hidden>
+    <strong>Demo Mode.</strong>
+    Add your Firebase web config in <code>firebase-config.js</code> to enable live AI.
+    The summary below uses built-in sample data so you can explore the interface.
+  </div>
+
+  <section class="hero">
+    <h1>Turn long notes into <span class="accent">clear summaries</span>.</h1>
+    <p class="lede">Paste meeting notes, lectures, or articles. Get a brief summary, key points, or action items in seconds — privately on your device when possible, in the cloud when you need more power.</p>
+  </section>
+
+  <section class="card">
+    <div class="grid">
+      <div class="col-input">
+        <label class="field-label" for="notesInput">Your notes</label>
+        <textarea id="notesInput" rows="12" placeholder="Paste meeting notes, a lecture transcript, or an article here…"></textarea>
+        <div class="input-meta">
+          <span id="wordCount">0 words</span>
+          <span id="readTime"></span>
+          <span class="spacer"></span>
+          <button class="btn btn-ghost" id="clearBtn" type="button">Clear</button>
+        </div>
+        <div class="samples">
+          <span class="samples-label">Try a sample:</span>
+          <button class="chip" data-sample="meeting" type="button">Team meeting</button>
+          <button class="chip" data-sample="lecture" type="button">Lecture notes</button>
+          <button class="chip" data-sample="article" type="button">Article</button>
+        </div>
+
+        <fieldset class="controls">
+          <legend>Summary style</legend>
+          <label class="radio"><input type="radio" name="style" value="brief" checked /> Brief</label>
+          <label class="radio"><input type="radio" name="style" value="detailed" /> Detailed</label>
+          <label class="radio"><input type="radio" name="style" value="actions" /> Action items</label>
+          <label class="radio"><input type="radio" name="style" value="keypoints" /> Key points</label>
+        </fieldset>
+
+        <label class="field-label" for="modeSelect">Inference mode</label>
+        <select id="modeSelect">
+          <option value="prefer-device" selected>Auto — prefer on-device, fall back to cloud</option>
+          <option value="device-only">On-device only (private, offline)</option>
+          <option value="cloud-only">Cloud only (most powerful)</option>
+        </select>
+
+        <button class="btn btn-primary btn-large" id="summarizeBtn" type="button">✦ Summarize</button>
+        <p class="hint" id="statusLine">Ready. Short notes run on-device with Gemini Nano; long documents use the cloud.</p>
+      </div>
+
+      <div class="col-output">
+        <div class="output-head">
+          <label class="field-label">Summary</label>
+          <span id="sourceBadge" class="source-badge" hidden></span>
+        </div>
+        <div id="output" class="output" aria-live="polite">
+          <p class="placeholder">Your summary will appear here. Pick a sample on the left, or paste your own notes, then press <strong>Summarize</strong>.</p>
+        </div>
+        <div class="output-actions">
+          <button class="btn btn-ghost" id="copyBtn" type="button" disabled>Copy</button>
+          <button class="btn btn-ghost" id="downloadBtn" type="button" disabled>Download .md</button>
+          <button class="btn btn-ghost" id="newBtn" type="button" disabled>New summary</button>
+        </div>
+
+        <h2 class="section-title">History</h2>
+        <ul id="historyList" class="history"></ul>
+        <p class="hint" id="historyEmpty">No summaries yet. Your recent summaries are saved on this device.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <h2>How hybrid inference works</h2>
+    <div class="how-grid">
+      <article class="how-card">
+        <h3>On-device</h3>
+        <p>Short notes are summarized right on your device with Gemini Nano — private, fast, free, and it works offline.</p>
+      </article>
+      <article class="how-card">
+        <h3>In the cloud</h3>
+        <p>Long documents and complex requests go to Gemini in the cloud, where a larger model handles the heavy lifting.</p>
+      </article>
+      <article class="how-card">
+        <h3>Hybrid, automatically</h3>
+        <p>Firebase AI Logic picks the right place to run each request, so you get a great result whether you are online or off — and you always see where it ran.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    Built with <strong>Firebase AI Logic</strong> — Gemini Nano on-device + Gemini in the cloud.
+    Free to use. Your notes stay yours.
+  </div>
+</footer>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
