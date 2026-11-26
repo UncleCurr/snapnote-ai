@@ -283,6 +283,7 @@ async function summarize() {
     const model = getGenerativeModel(ai, {
       mode: inferenceModeFromSelect(),
       inCloudParams: {
+        model: "gemini-2.5-flash",
         generationConfig: { maxOutputTokens: 1200, temperature: 0.4 },
       },
       onDeviceParams: {
