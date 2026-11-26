@@ -8,7 +8,7 @@ import {
   GoogleAIBackend,
   InferenceMode,
 } from "firebase/ai";
-import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 import { firebaseConfig, isConfigured } from "./firebase-config.js";
 
 // ---------------------------------------------------------------------------
@@ -90,15 +90,12 @@ function initFirebase() {
   if (!isConfigured) return false;
   try {
     firebaseApp = initializeApp(firebaseConfig);
-    // App Check is required by Firebase AI Logic. For local development and
-    // demos, a debug token is accepted: the SDK prints a token in the
-    // console — register it under Firebase console > App Check > your web
-    // app > Manage debug tokens. Replace the provider with your real
-    // reCAPTCHA v3 site key for production.
+    // App Check is required by Firebase AI Logic. The web app is registered
+    // in the Firebase console with reCAPTCHA Enterprise as its attestation
+    // provider, so production requests carry a valid App Check token.
     try {
-      self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
       initializeAppCheck(firebaseApp, {
-        provider: new ReCaptchaV3Provider("6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"),
+        provider: new ReCaptchaEnterpriseProvider("6Ld4JjMuAAAAAIYZ9eIoz1eMsfraeFWjtYVQPmbk"),
         isTokenAutoRefreshEnabled: true,
       });
     } catch (e) {
